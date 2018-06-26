@@ -55,6 +55,7 @@
             },
             addTodo(todo) {
                 this.todos.unshift(todo);
+                this.empty = false;
             },
             removeTodo(todo) {
                 this.warningAlert().then((result) => {
@@ -63,6 +64,7 @@
                             .then(() => {
                                 this.getTodos();
                                 this.successAlert('deleted.');
+                                if(this.todos.length = 0) this.empty = true;
                         });
                     }
                 })

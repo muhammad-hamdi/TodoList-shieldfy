@@ -51562,6 +51562,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         addTodo: function addTodo(todo) {
             this.todos.unshift(todo);
+            this.empty = false;
         },
         removeTodo: function removeTodo(todo) {
             var _this2 = this;
@@ -51571,6 +51572,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     axios.delete('api/todos/' + todo.id).then(function () {
                         _this2.getTodos();
                         _this2.successAlert('deleted.');
+                        if (_this2.todos.length = 0) _this2.empty = true;
                     });
                 }
             });
