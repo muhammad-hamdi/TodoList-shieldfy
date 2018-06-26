@@ -7,43 +7,82 @@
             <form-component @todoAdded="addTodo($event)"></form-component>
             <hr>
             <div class="list-group">
-                <task v-for="todo in todos" :key="todo.id" :todo="todo"></task>
+                <task v-for="todo in todos" :key="todo.id" :todo="todo" @remove="removeTodo($event)"></task>
             </div>
-            <paginator :meta="meta"></paginator>
+            <hr>
+            <div class="col-md-12">
+                <paginator :meta="meta" @navigate="navigate($event)"></paginator>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-import FormComponent from './FormComponent.vue';
-import Task from './TaskComponent.vue';
-import Paginator from './PaginationComponent.vue';
-export default {
-    data() {
-        return {
-            todos: [],
-            meta: {}
-        };
-    },
-    created() {
-        this.getTodos();
-    },
-    methods: {
-        getTodos(url = `api/todos`) {
-            axios.get(url)
-                .then(response => {
-                    this.todos = response.data.data;
-                    this.meta = response.data.meta
-                })
+    import FormComponent from './FormComponent.vue';
+    import Task from './TaskComponent.vue';
+    import Paginator from './PaginationComponent.vue';
+
+    export default {
+        data() {
+            return {
+                todos: [],
+                meta: {}
+            };
         },
-        addTodo(todo) {
-            this.todos.unshift(todo);
+        created() {
+            this.getTodos();
+        },
+        methods: {
+            getTodos(page = 1) {
+                axios.get(`api/todos`, {
+                    params: {
+                        page
+                    }
+                }).then(response => {
+                    this.todos = response.data.data;
+                    this.meta = Object.assign(response.data.meta, response.data.links);
+                })
+            },
+            navigate(page) {
+                this.getTodos(page);
+            },
+            addTodo(todo) {
+                this.todos.unshift(todo);
+            },
+            removeTodo(todo) {
+                this.warningAlert().then((result) => {
+                    if (result.value) {
+                        axios.delete(`api/todos/${todo.id}`)
+                            .then(() => {
+                                this.getTodos();
+                                this.successAlert();
+                        });
+                    }
+                })
+            },
+            warningAlert() {
+                return this.$swal({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                })
+            },
+            successAlert() {
+                return this.$swal(
+                    'Deleted!',
+                    'Your item has been deleted.',
+                    'success'
+                )
+            }
+        },
+        components: {
+            FormComponent,
+            Task,
+            Paginator
         }
-    },
-    components: {
-        FormComponent,
-        Task,
-        Paginator
     }
-}
 </script>

@@ -1,11 +1,17 @@
 <template>
-    <a href="#" class="list-group-item list-group-item-action">
+    <div class="list-group-item list-group-item-action">
         {{ todo.content }}
-    </a>
+        <a href="javascript:void(0)" @click="removeTodo(todo)" class="position-absolute" style="right: 20px;"><i class="fa fa-trash fa-2x"></i></a>
+    </div>
 </template>
 
 <script>
 export default {
-    props: ['todo']
+    props: ['todo'],
+    methods: {
+        removeTodo(todo) {
+            this.$emit('remove', todo);
+        }
+    }
 }
 </script>

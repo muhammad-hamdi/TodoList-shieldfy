@@ -8,7 +8,10 @@
 require('./bootstrap');
 
 import Vue from 'vue';
+import VueSweetAlert from 'vue-sweetalert2';
 import AppComponent from './components/AppComponent.vue';
+
+Vue.use(VueSweetAlert);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
