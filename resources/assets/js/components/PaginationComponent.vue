@@ -10,7 +10,7 @@
             </li>
             <li class="page-item"
                 v-for="page in meta.last_page"
-                v-if="(page - meta.current_page) <= 5 && (page - meta.current_page) >= 0"
+                v-if="(page - meta.current_page) <= size && (page - meta.current_page) >= 0"
                 @click="navigate(page)"
             >
                 <a class="page-link" href="javascript:">{{ page }}</a>

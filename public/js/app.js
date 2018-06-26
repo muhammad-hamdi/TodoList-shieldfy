@@ -48480,7 +48480,7 @@ var render = function() {
         ),
         _vm._v(" "),
         _vm._l(_vm.meta.last_page, function(page) {
-          return page - _vm.meta.current_page <= 5 &&
+          return page - _vm.meta.current_page <= _vm.size &&
             page - _vm.meta.current_page >= 0
             ? _c(
                 "li",
