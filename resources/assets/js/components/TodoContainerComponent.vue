@@ -1,5 +1,5 @@
 <template>
-    <div class="card">
+    <div class="card mb-5">
         <div class="card-header bg-primary text-white">
             <h1>Add Todo</h1>
         </div>
@@ -55,7 +55,7 @@
                         axios.delete(`api/todos/${todo.id}`)
                             .then(() => {
                                 this.getTodos();
-                                this.successAlert();
+                                this.successAlert('deleted.');
                         });
                     }
                 })
@@ -71,10 +71,10 @@
                     confirmButtonText: 'Yes, delete it!'
                 })
             },
-            successAlert() {
+            successAlert(event) {
                 return this.$swal(
-                    'Deleted!',
-                    'Your item has been deleted.',
+                    event,
+                    `Your item has been ${event}`,
                     'success'
                 )
             }

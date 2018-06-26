@@ -12,23 +12,31 @@
 </template>
 
 <script>
-export default {
-    data() {
-        return {
-            content: '',
-        };
-    },
-    methods: {
-        addTodo() {
-            const req = {
-                content: this.content
+    export default {
+        data() {
+            return {
+                content: '',
             };
-            axios.post(`api/todos`, req)
-                .then(response => {
-                    this.content = '';
-                    this.$emit('todoAdded', response.data.data);
+        },
+        methods: {
+            addTodo() {
+                const req = {
+                    content: this.content
+                };
+                axios.post(`api/todos`, req)
+                    .then(response => {
+                        this.content = '';
+                        this.$emit('todoAdded', response.data.data);
+                    }).catch(error => {
+                    if (error.response.status === 422) {
+                        this.$swal(
+                            'Error!',
+                            'there was a problem with the data you entered.',
+                            'error'
+                        )
+                    }
                 })
+            }
         }
     }
-}
 </script>
