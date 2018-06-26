@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import TodoComponent from './TodoComponent.vue';
+import TodoComponent from './TodoContainerComponent.vue';
 export default {
     components: {
         TodoComponent
