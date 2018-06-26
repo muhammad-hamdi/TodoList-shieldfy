@@ -41,17 +41,27 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'host' => env('MYSQL_HOST', '127.0.0.1'),
+            'port' => env('MYSQL_PORT', '3306'),
+            'database' => env('MYSQL_DATABASE', 'forge'),
+            'username' => env('MYSQL_USERNAME', 'forge'),
+            'password' => env('MYSQL_PASSWORD', ''),
             'unix_socket' => env('DB_SOCKET', ''),
-            'charset' => env('DB_CHARSET', 'utf8'),
+            'charset' => env('MYSQL_CHARSET', 'utf8'),
             'collation' => 'utf8_general_ci',
             'prefix' => '',
             'strict' => true,
             'engine' => null,
+        ],
+
+        'mongodb' => [
+            'driver'   => 'mongodb',
+            'host'     => env('MONGO_DB_HOST', 'localhost'),
+            'port'     => env('MONGO_DB_PORT', 27017),
+            'database' => env('MONGO_DB_DATABASE'),
+            'username' => env('MONGO_DB_USERNAME'),
+            'password' => env('MONGO_DB_PASSWORD'),
+            'options'  => []
         ],
 
         'pgsql' => [

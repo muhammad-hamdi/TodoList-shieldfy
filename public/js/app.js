@@ -51519,6 +51519,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 
@@ -51528,7 +51531,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             todos: [],
-            meta: {}
+            meta: {},
+            empty: false
         };
     },
     created: function created() {
@@ -51546,6 +51550,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     page: page
                 }
             }).then(function (response) {
+                if (!response.data.data.length) {
+                    _this.empty = true;
+                }
                 _this.todos = response.data.data;
                 _this.meta = Object.assign(response.data.meta, response.data.links);
             });
@@ -51835,7 +51842,7 @@ var render = function() {
       "a",
       {
         staticClass: "position-absolute",
-        staticStyle: { right: "20px" },
+        staticStyle: { top: "10px", right: "10px" },
         attrs: { href: "javascript:void(0)" },
         on: {
           click: function($event) {
@@ -52096,23 +52103,31 @@ var render = function() {
           })
         ),
         _vm._v(" "),
-        _c("hr"),
+        _vm.empty
+          ? _c("div", { staticClass: "text-center" }, [
+              _c("p", { staticClass: "lead" }, [_vm._v("No todos yet.")])
+            ])
+          : _vm._e(),
         _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "col-md-12" },
-          [
-            _c("paginator", {
-              attrs: { meta: _vm.meta },
-              on: {
-                navigate: function($event) {
-                  _vm.navigate($event)
-                }
-              }
-            })
-          ],
-          1
-        )
+        _vm.todos.length
+          ? _c(
+              "div",
+              { staticClass: "col-md-12" },
+              [
+                _c("hr"),
+                _vm._v(" "),
+                _c("paginator", {
+                  attrs: { meta: _vm.meta },
+                  on: {
+                    navigate: function($event) {
+                      _vm.navigate($event)
+                    }
+                  }
+                })
+              ],
+              1
+            )
+          : _vm._e()
       ],
       1
     )

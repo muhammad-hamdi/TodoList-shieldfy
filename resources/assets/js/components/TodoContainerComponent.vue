@@ -9,8 +9,11 @@
             <div class="list-group">
                 <task v-for="todo in todos" :key="todo.id" :todo="todo" @remove="removeTodo($event)"></task>
             </div>
-            <hr>
-            <div class="col-md-12">
+            <div class="text-center" v-if="empty">
+                <p class="lead">No todos yet.</p>
+            </div>
+            <div class="col-md-12" v-if="todos.length">
+                <hr>
                 <paginator :meta="meta" @navigate="navigate($event)"></paginator>
             </div>
         </div>
@@ -26,7 +29,8 @@
         data() {
             return {
                 todos: [],
-                meta: {}
+                meta: {},
+                empty: false
             };
         },
         created() {
@@ -39,6 +43,9 @@
                         page
                     }
                 }).then(response => {
+                    if(!response.data.data.length) {
+                        this.empty = true;
+                    }
                     this.todos = response.data.data;
                     this.meta = Object.assign(response.data.meta, response.data.links);
                 })
