@@ -30,7 +30,7 @@ class TodoValidationTest extends TestCase
             str_random(256),
             123456
         ];
-        
+
         foreach ($cases as $case) {
             $response = $this->postJson(route('api.todos.store'), [
                 'content' => $case
